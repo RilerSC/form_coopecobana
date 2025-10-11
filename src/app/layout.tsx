@@ -33,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="container py-6">
               <div className="flex items-center justify-center space-x-6">
                 <Image
-                  src="/logo.png"
+                  src="../public/Logo.png"
                   alt="COOPECOBANA Logo"
                   width={80}
                   height={80}
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <div className="text-center">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <Image
-                    src="/logo.png"
+                    src="/Logo.png"
                     alt="COOPECOBANA Logo"
                     width={32}
                     height={32}

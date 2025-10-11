@@ -135,7 +135,7 @@ export const enviarCorreoAdministradores = async (datos: FormularioData) => {
       address: process.env.MAIL_FROM || 'noreply@coopecobanarl.com'
     },
     to: process.env.MAIL_TO_ADMIN?.split(',').map(email => email.trim()) || [],
-    subject: datos.cedula, // Asunto = número de cédula
+    subject: `Nuevo Registro Asamblea - ${datos.numeroAsociado}`, // Asunto = número de asociado
     text: generarCorreoAdministradores(datos),
     attachments: adjuntos,
     replyTo: process.env.MAIL_REPLY_TO || 'achaconf@coopecobanarl.com'

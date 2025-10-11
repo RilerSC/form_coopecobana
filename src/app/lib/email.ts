@@ -156,7 +156,7 @@ export const enviarCorreoConfirmacion = async (datos: FormularioData) => {
       address: process.env.MAIL_FROM || 'noreply@coopecobanarl.com'
     },
     to: datos.correoElectronico,
-    subject: `Confirmación de envío – ${datos.cedula}`,
+    subject: `Confirmación de envío – ${datos.numeroAsociado}`,
     text: generarCorreoConfirmacion(datos),
     replyTo: process.env.MAIL_REPLY_TO || 'achaconf@coopecobanarl.com'
   }

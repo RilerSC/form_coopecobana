@@ -1,29 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configuración para hosting tradicional
-  output: 'export',
+  // Configuración optimizada para Vercel
   
   // Configuración de imágenes
   images: {
     domains: [],
-    unoptimized: true, // Para hosting compartido
-  },
-  
-  // Configuración de archivos estáticos
-  trailingSlash: false,
-  
-  // Variables de entorno públicas
-  env: {
-    TZ: process.env.TZ || 'America/Costa_Rica',
-  },'next').NextConfig} */
-const nextConfig = {
-  // Configuración para BanaHosting (shared hosting)
-  output: 'export',
-  
-  // Configuración de imágenes
-  images: {
-    domains: [],
-    unoptimized: true, // Para hosting compartido
+    unoptimized: true, // Para compatibilidad con hosting estático
   },
   
   // Configuración de archivos estáticos
@@ -41,7 +23,7 @@ const nextConfig = {
     },
   },
   
-  // Headers de seguridad
+  // Headers de seguridad para Vercel
   async headers() {
     return [
       {
@@ -63,6 +45,6 @@ const nextConfig = {
       },
     ];
   },
-};
+}
 
 module.exports = nextConfig;

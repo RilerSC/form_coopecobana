@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,13 +31,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <header className="bg-white border-b-4 border-coopecobana-500 shadow-lg">
             <div className="container py-6">
               <div className="flex items-center justify-center space-x-6">
-                <Image
+                <img
                   src="/Logo.png"
                   alt="COOPECOBANA Logo"
                   width={80}
                   height={80}
                   className="h-16 w-auto object-contain"
-                  priority
                 />
                 <div className="text-center">
                   <h1 className="text-2xl md:text-3xl font-bold text-coopecobana-800">
@@ -65,7 +63,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="container py-6">
               <div className="text-center">
                 <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Image
+                  <img
                     src="/Logo.png"
                     alt="COOPECOBANA Logo"
                     width={32}

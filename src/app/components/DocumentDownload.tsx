@@ -24,14 +24,53 @@ export const DocumentDownload = forwardRef<HTMLDivElement, DocumentDownloadProps
     variant = 'primary',
     className 
   }, ref) => {
-    const handleDownload = () => {
-      const link = document.createElement('a')
-      link.href = downloadUrl
-      link.download = fileName
-      link.target = '_blank'
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+    const handleDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
+      // PREVENCIÓN COMPLETA DE EVENTOS
+      e.preventDefault()
+      e.stopPropagation()
+      
+      // Acceso al evento nativo para stopImmediatePropagation
+      const nativeEvent = e.nativeEvent
+      if (nativeEvent && typeof nativeEvent.stopImmediatePropagation === 'function') {
+        nativeEvent.stopImmediatePropagation()
+      }
+      
+      // Marcar que este es un evento de descarga
+      console.log('🔄 Iniciando descarga:', fileName)
+      
+      // Usar timeout para evitar conflictos con otros eventos
+      setTimeout(() => {
+        try {
+          // Método principal: descarga directa
+          const link = document.createElement('a')
+          link.href = downloadUrl
+          link.download = fileName
+          link.target = '_blank'
+          link.rel = 'noopener noreferrer'
+          link.style.display = 'none'
+          
+          // Agregar al DOM, click y remover
+          document.body.appendChild(link)
+          link.click()
+          
+          // Cleanup después de un delay
+          setTimeout(() => {
+            if (document.body.contains(link)) {
+              document.body.removeChild(link)
+            }
+          }, 100)
+          
+          console.log('✅ Descarga iniciada correctamente')
+          
+        } catch (error) {
+          console.warn('⚠️ Error en descarga directa, usando fallback:', error)
+          // Fallback: abrir en nueva ventana
+          window.open(downloadUrl, '_blank', 'noopener,noreferrer')
+        }
+      }, 50) // Delay mínimo para evitar interferencias
+      
+      // Asegurar que el evento no se propague
+      return false
     }
 
     return (
@@ -89,7 +128,15 @@ export const DocumentDownload = forwardRef<HTMLDivElement, DocumentDownloadProps
             
             {/* Botón de descarga */}
             <button
+              type="button"
               onClick={handleDownload}
+              onMouseDown={(e) => e.stopPropagation()}
+              onMouseUp={(e) => e.stopPropagation()}
+              data-download-button="true"
+              data-file-name={fileName}
+              data-action="download"
+              role="button"
+              aria-label={`Descargar ${title}`}
               className={clsx(
                 'inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2',
                 {

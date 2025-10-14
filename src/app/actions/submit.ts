@@ -32,6 +32,7 @@ export async function procesarFormulario(formData: FormData): Promise<Formulario
       cedula: formData.get('cedula') as string,
       nombreCompleto: formData.get('nombreCompleto') as string,
       correoElectronico: formData.get('correoElectronico') as string,
+      correoElectronicoSecundario: formData.get('correoElectronicoSecundario') as string || undefined,
       telefonoCelular: formData.get('telefonoCelular') as string,
       participaraAsamblea: formData.get('participaraAsamblea') as 'si' | 'no',
       representaraOtros: formData.get('representaraOtros') as 'si' | 'no' | undefined,

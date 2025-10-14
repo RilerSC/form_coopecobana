@@ -50,6 +50,7 @@ Número de Asociado: ${datos.numeroAsociado}
 Cédula: ${datos.cedula}
 Nombre Completo: ${datos.nombreCompleto}
 Correo Electrónico: ${datos.correoElectronico}
+${datos.correoElectronicoSecundario ? `Correo Electrónico Secundario: ${datos.correoElectronicoSecundario}` : ''}
 Teléfono Celular: ${datos.telefonoCelular || 'No proporcionado'}
 
 PARTICIPACIÓN:
@@ -83,6 +84,8 @@ RESUMEN DE SU ENVÍO:
 ===================
 Número de Asociado: ${datos.numeroAsociado}
 Cédula: ${datos.cedula}
+Correo Principal: ${datos.correoElectronico}
+${datos.correoElectronicoSecundario ? `Correo Secundario: ${datos.correoElectronicoSecundario}` : ''}
 Participará en la Asamblea: ${datos.participaraAsamblea === 'si' ? 'Sí' : 'No'}
 ${datos.representaraOtros ? `Representará a otros: ${datos.representaraOtros === 'si' ? 'Sí' : 'No'}` : ''}
 Archivos adjuntos: ${datos.archivos.length}
@@ -92,15 +95,17 @@ INFORMACIÓN IMPORTANTE:
 • Su información ha sido transmitida de forma segura
 • No es necesario enviar el formulario nuevamente
 • Conserve este correo como comprobante
-• Para consultas, contacte a: coopecobana@outlook.com
+• Para consultas, contacte a: achaconf@coopecobanarl.com
 
 Gracias por su participación.
 
 Atentamente,
 COOPECOBANA R.L.
+Asamblea General
 
 --
-Este es un correo automático. No responda a esta dirección.
+NOTA: Este correo es enviado desde nuestro sistema automatizado.
+Para consultas oficiales, escriba a: achaconf@coopecobanarl.com
 Fecha: ${new Date().toLocaleString('es-CR', { timeZone: 'America/Costa_Rica' })}
 `.trim()
 }
@@ -148,6 +153,10 @@ export const enviarCorreoAdministradores = async (datos: FormularioData) => {
  * Enviar correo de confirmación al asociado
  */
 export const enviarCorreoConfirmacion = async (datos: FormularioData) => {
+  console.log('🔄 Iniciando envío de correo de confirmación...')
+  console.log('📧 Destinatario:', datos.correoElectronico)
+  console.log('🔑 Usuario Gmail:', process.env.GMAIL_USER)
+  
   const transportador = crearTransportador()
   
   const opcionesCorreo = {
@@ -160,6 +169,12 @@ export const enviarCorreoConfirmacion = async (datos: FormularioData) => {
     text: generarCorreoConfirmacion(datos),
     replyTo: process.env.MAIL_REPLY_TO || 'achaconf@coopecobanarl.com'
   }
+
+  console.log('📬 Opciones de correo:', {
+    from: opcionesCorreo.from,
+    to: opcionesCorreo.to,
+    subject: opcionesCorreo.subject
+  })
 
   return await transportador.sendMail(opcionesCorreo)
 }

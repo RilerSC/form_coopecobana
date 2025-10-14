@@ -33,7 +33,21 @@ export const FormularioSchema = z.object({
     .string()
     .min(1, ERROR_MESSAGES.REQUIRED_FIELD)
     .email(ERROR_MESSAGES.INVALID_EMAIL)
+    .refine(
+      (email) => !email.toLowerCase().endsWith('@bncr.fi.cr'),
+      { message: ERROR_MESSAGES.RESTRICTED_EMAIL_DOMAIN }
+    )
     .transform(val => val.toLowerCase().trim()),
+
+  // Correo electrónico secundario - opcional
+  correoElectronicoSecundario: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || z.string().email().safeParse(val).success,
+      { message: ERROR_MESSAGES.INVALID_EMAIL }
+    )
+    .transform(val => val?.toLowerCase().trim()),
 
   // Teléfono celular - opcional, solo dígitos
   telefonoCelular: z

@@ -34,7 +34,8 @@ export default function HomePage() {
     setValue,
     formState: { errors }
   } = useForm<FormularioInput>({
-    resolver: zodResolver(FormularioSchemaCompleto)
+    resolver: zodResolver(FormularioSchemaCompleto),
+    mode: 'onBlur' // Validar cuando el usuario salga del campo
   })
 
   // Watch para participación
@@ -163,13 +164,23 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
               <FormField
                 type="email"
-                label="Correo Electrónico"
+                label="Correo Electrónico (No dominio BNCR)"
                 placeholder="Ej: juan@email.com"
                 required
                 error={errors.correoElectronico?.message}
                 {...register('correoElectronico')}
               />
               
+              <FormField
+                type="email"
+                label="Correo Electrónico Secundario (Opcional)"
+                placeholder="Ej: juan.secundario@email.com"
+                error={errors.correoElectronicoSecundario?.message}
+                {...register('correoElectronicoSecundario')}
+              />
+            </div>
+            
+            <div className="mt-6">
               <FormField
                 type="tel"
                 label="Teléfono Celular (Opcional)"

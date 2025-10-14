@@ -10,6 +10,7 @@ export interface FormularioData {
   cedula: string
   nombreCompleto: string
   correoElectronico: string
+  correoElectronicoSecundario?: string | undefined // Opcional
   telefonoCelular?: string | undefined // Opcional
   participaraAsamblea: 'si' | 'no'
   representaraOtros?: 'si' | 'no' | undefined // Solo si participa = 'si'
@@ -181,6 +182,7 @@ export const ERROR_MESSAGES = {
   INVALID_EMAIL: 'Ingrese un correo electrónico válido',
   INVALID_CEDULA: 'La cédula debe contener solo números',
   INVALID_NUMERO_ASOCIADO: 'El número de asociado debe contener solo números',
+  RESTRICTED_EMAIL_DOMAIN: 'No se permiten correos con dominio @bncr.fi.cr',
   FILE_TOO_LARGE: 'El archivo excede el tamaño máximo permitido',
   TOTAL_SIZE_EXCEEDED: 'El tamaño total de archivos excede el límite',
   INVALID_FILE_TYPE: 'Tipo de archivo no permitido',

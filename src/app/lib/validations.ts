@@ -136,7 +136,7 @@ export const validarFechaLimite = (): boolean => {
 }
 
 /**
- * Validación condicional para representación
+ * Schema completo con validaciones condicionales
  */
 export const FormularioSchemaCompleto = FormularioSchema.refine(
   (data) => {
@@ -149,6 +149,27 @@ export const FormularioSchemaCompleto = FormularioSchema.refine(
   {
     message: 'Debe indicar si representará a otros asociados',
     path: ['representaraOtros']
+  }
+).refine(
+  (data) => {
+    console.log('🔍 Validando archivos:', {
+      participaraAsamblea: data.participaraAsamblea,
+      representaraOtros: data.representaraOtros,
+      archivos: data.archivos?.length || 0
+    })
+    
+    // Si NO participa y SÍ quiere ser representado, debe adjuntar documentos
+    if (data.participaraAsamblea === 'no' && data.representaraOtros === 'si') {
+      const resultado = data.archivos && data.archivos.length > 0
+      console.log('📎 Documentos requeridos, válido:', resultado)
+      return resultado
+    }
+    console.log('📎 Documentos no requeridos')
+    return true
+  },
+  {
+    message: 'Debe adjuntar la carta de representación firmada',
+    path: ['archivos']
   }
 )
 

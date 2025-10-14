@@ -40,6 +40,7 @@ export default function HomePage() {
 
   // Watch para participación
   const participaraAsamblea = watch('participaraAsamblea')
+  const representaraOtros = watch('representaraOtros')
 
   // Efecto para mostrar/ocultar pregunta de representación
   useEffect(() => {
@@ -48,8 +49,23 @@ export default function HomePage() {
     } else {
       setShowRepresentacion(false)
       setValue('representaraOtros', undefined)
+      // Limpiar archivos si se oculta la sección
+      setFiles([])
     }
   }, [participaraAsamblea, setValue])
+
+  // Efecto para limpiar archivos cuando no se necesita la sección de documentos
+  useEffect(() => {
+    const mostrarDocumentos = participaraAsamblea === 'no' && representaraOtros === 'si'
+    if (!mostrarDocumentos) {
+      setFiles([])
+    }
+  }, [participaraAsamblea, representaraOtros])
+
+  // Efecto para sincronizar archivos con React Hook Form
+  useEffect(() => {
+    setValue('archivos', files)
+  }, [files, setValue])
 
   // Si el formulario está cerrado, redirigir
   if (!isOpen) {
@@ -59,6 +75,9 @@ export default function HomePage() {
 
   // Envío del formulario
   const onSubmit = async (data: FormularioInput) => {
+    console.log('🚀 onSubmit ejecutado', data)
+    console.log('📁 Archivos en data:', data.archivos?.length || 0)
+    
     try {
       setLoading()
       
@@ -72,13 +91,19 @@ export default function HomePage() {
         }
       })
       
-      // Agregar archivos
-      files.forEach((file) => {
-        formData.append('archivos', file)
-      })
+      // Agregar archivos (ahora desde data.archivos)
+      if (data.archivos) {
+        data.archivos.forEach((file) => {
+          formData.append('archivos', file)
+        })
+      }
+      
+      console.log('📤 Enviando formulario...')
       
       // Enviar formulario
       const resultado = await procesarFormulario(formData)
+      
+      console.log('📨 Resultado:', resultado)
       
       if (resultado.success) {
         // Éxito: redirigir a página de confirmación
@@ -91,6 +116,7 @@ export default function HomePage() {
       }
       
     } catch (error) {
+      console.error('❌ Error en onSubmit:', error)
       setError('Error de conexión. Intente nuevamente.')
     }
   }
@@ -255,18 +281,26 @@ export default function HomePage() {
             )}
           </div>
 
-          {/* Documentos */}
-          <div className="form-section">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">
-              Documentos Adjuntos
-            </h3>
-            
-            <FileUpload
-              onFilesChange={setFiles}
-              currentFiles={files}
-              disabled={isLoading}
-            />
-          </div>
+          {/* Documentos - Solo visible cuando NO participa y SÍ quiere ser representado */}
+          {participaraAsamblea === 'no' && watch('representaraOtros') === 'si' && (
+            <div className="form-section">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                Documentos Adjuntos
+              </h3>
+              
+              <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-blue-800">
+                  📎 <strong>Importante:</strong> Debe adjuntar la carta de representación completada y firmada por ambas partes (usted y su representante).
+                </p>
+              </div>
+              
+              <FileUpload
+                onFilesChange={setFiles}
+                currentFiles={files}
+                disabled={isLoading}
+              />
+            </div>
+          )}
 
           {/* Error general */}
           {isError && (

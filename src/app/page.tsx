@@ -161,7 +161,7 @@ export default function HomePage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <NumericField
-                label="Número de Asociado"
+                label="Número de Empleado BNCR"
                 placeholder="Ej: 012345"
                 required
                 error={errors.numeroAsociado?.message}

@@ -171,7 +171,7 @@ export const FORM_CONSTANTS = {
   ],
   ALLOWED_EXTENSIONS: ['.pdf', '.jpg', '.jpeg', '.png', '.docx'],
   // Usa variable de entorno FORM_CLOSE_DATE con fallback
-  FECHA_CIERRE: process.env.FORM_CLOSE_DATE,
+  FECHA_CIERRE: process.env.FORM_CLOSE_DATE || '2025-11-20T01:00:00-06:00',
   ZONA_HORARIA: 'America/Costa_Rica'
 } as const
 

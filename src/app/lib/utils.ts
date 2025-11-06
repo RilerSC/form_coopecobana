@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { FormularioEstado } from '../types'
+import { FORM_CONSTANTS } from '../types'
 
 /**
  * Hook para manejar el estado del formulario
@@ -58,7 +59,7 @@ export function useFormAvailability() {
   useEffect(() => {
     const checkAvailability = () => {
       const now = new Date()
-      const closingDate = new Date('2025-11-06T01:00:00-06:00')
+      const closingDate = new Date(FORM_CONSTANTS.FECHA_CIERRE)
       const isFormOpen = now < closingDate
 
       setIsOpen(isFormOpen)

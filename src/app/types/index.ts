@@ -170,7 +170,8 @@ export const FORM_CONSTANTS = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
   ],
   ALLOWED_EXTENSIONS: ['.pdf', '.jpg', '.jpeg', '.png', '.docx'],
-  FECHA_CIERRE: '2025-11-06T01:00:00-06:00',
+  // Usa variable de entorno FORM_CLOSE_DATE con fallback
+  FECHA_CIERRE: process.env.FORM_CLOSE_DATE,
   ZONA_HORARIA: 'America/Costa_Rica'
 } as const
 

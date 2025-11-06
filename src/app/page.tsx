@@ -21,7 +21,7 @@ import type { FormularioInput } from './lib/validations'
 export default function HomePage() {
   // Estado del formulario
   const router = useRouter()
-  const { isOpen, timeRemaining, closeDate } = useFormAvailability()
+  const { isOpen, timeRemaining } = useFormAvailability()
   const { isLoading, isError, error, setLoading, setError } = useFormState()
   const [files, setFiles] = useState<File[]>([])
   const [showRepresentacion, setShowRepresentacion] = useState(false)

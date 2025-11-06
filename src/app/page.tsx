@@ -137,9 +137,9 @@ export default function HomePage() {
             <p>
               <strong>Tiempo restante:</strong> {timeRemaining}
             </p>
-            <p>
+            {/* <p>
               <strong>Fecha límite:</strong> {closeDate}
-            </p>
+            </p> */}
             <p>
               <strong>Archivos permitidos:</strong> PDF, JPG, PNG, DOCX (máximo 10MB cada uno, 20MB total)
             </p>

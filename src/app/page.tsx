@@ -35,7 +35,17 @@ export default function HomePage() {
     formState: { errors }
   } = useForm<FormularioInput>({
     resolver: zodResolver(FormularioSchemaCompleto),
-    mode: 'onBlur' // Validar cuando el usuario salga del campo
+    mode: 'onBlur', // Validar cuando el usuario salga del campo
+    defaultValues: {
+      numeroAsociado: '',
+      cedula: '',
+      nombreCompleto: '',
+      correoElectronico: '',
+      correoElectronicoSecundario: '',
+      telefonoCelular: '',
+      archivos: []
+    },
+    shouldFocusError: true
   })
 
   // Watch para participación

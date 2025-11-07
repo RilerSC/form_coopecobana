@@ -1,6 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { ServerFormularioSchema, validarArchivos, validarFechaLimite } from '../lib/validations'
 import { enviarCorreoAdministradores, enviarCorreoConfirmacion, enviarNotificacionError } from '../lib/email'
 import type { FormularioRespuesta } from '../types'
@@ -13,7 +12,12 @@ export async function procesarFormulario(formData: FormData): Promise<Formulario
   try {
     // 1. Verificar que el formulario esté abierto
     if (!validarFechaLimite()) {
-      redirect('/cerrado')
+      return {
+        success: false,
+        message: 'Formulario cerrado',
+        error: 'El formulario ya no está disponible',
+        redirect: '/cerrado'
+      }
     }
 
     // 2. Extraer archivos del FormData

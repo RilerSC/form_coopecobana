@@ -170,7 +170,7 @@ export const FORM_CONSTANTS = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
   ],
   ALLOWED_EXTENSIONS: ['.pdf', '.jpg', '.jpeg', '.png', '.docx'],
-  // Frontend usa NEXT_PUBLIC_, backend usa FORM_CLOSE_DATE (ambas con mismo valor)
+  // Priorizar NEXT_PUBLIC_ que está actualizada, luego FORM_CLOSE_DATE como fallback
   FECHA_CIERRE: process.env.NEXT_PUBLIC_FORM_CLOSE_DATE || process.env.FORM_CLOSE_DATE || '2025-11-20T01:00:00-06:00',
   ZONA_HORARIA: 'America/Costa_Rica'
 } as const

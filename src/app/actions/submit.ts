@@ -10,8 +10,14 @@ import type { FormularioRespuesta } from '../types'
  */
 export async function procesarFormulario(formData: FormData): Promise<FormularioRespuesta> {
   try {
+    console.log('🚀 [SERVER] Iniciando procesarFormulario')
+    
     // 1. Verificar que el formulario esté abierto
-    if (!validarFechaLimite()) {
+    const formularioAbierto = validarFechaLimite()
+    console.log('🔐 [SERVER] ¿Formulario abierto?', formularioAbierto)
+    
+    if (!formularioAbierto) {
+      console.log('❌ [SERVER] Formulario cerrado, devolviendo error')
       return {
         success: false,
         message: 'Formulario cerrado',
@@ -19,6 +25,8 @@ export async function procesarFormulario(formData: FormData): Promise<Formulario
         redirect: '/cerrado'
       }
     }
+    
+    console.log('✅ [SERVER] Formulario abierto, continuando con procesamiento')
 
     // 2. Extraer archivos del FormData
     const archivos: File[] = []

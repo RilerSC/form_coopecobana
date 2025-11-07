@@ -132,6 +132,14 @@ export const validarArchivos = (archivos: File[]) => {
 export const validarFechaLimite = (): boolean => {
   const ahora = new Date()
   const fechaCierre = new Date(FORM_CONSTANTS.FECHA_CIERRE)
+  
+  // Debug logging para producción
+  console.log('🔍 DEBUG validarFechaLimite:')
+  console.log('📅 Fecha actual:', ahora.toISOString())
+  console.log('⏰ FORM_CONSTANTS.FECHA_CIERRE:', FORM_CONSTANTS.FECHA_CIERRE)
+  console.log('📅 Fecha de cierre parseada:', fechaCierre.toISOString())
+  console.log('✅ Resultado (ahora < fechaCierre):', ahora < fechaCierre)
+  
   return ahora < fechaCierre
 }
 

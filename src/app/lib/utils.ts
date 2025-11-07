@@ -62,6 +62,13 @@ export function useFormAvailability() {
       const closingDate = new Date(FORM_CONSTANTS.FECHA_CIERRE)
       const isFormOpen = now < closingDate
 
+      // Debug logging para frontend
+      console.log('🔍 [FRONTEND] DEBUG useFormAvailability:')
+      console.log('📅 Fecha actual:', now.toISOString())
+      console.log('⏰ FORM_CONSTANTS.FECHA_CIERRE:', FORM_CONSTANTS.FECHA_CIERRE)
+      console.log('📅 Fecha de cierre parseada:', closingDate.toISOString())
+      console.log('✅ Formulario abierto (now < closingDate):', isFormOpen)
+
       setIsOpen(isFormOpen)
       setCloseDate(closingDate.toLocaleString('es-CR', {
         timeZone: 'America/Costa_Rica',
